@@ -21,17 +21,13 @@ VBoxManage convertdd "$f" "${f%%.bin}.vdi" --format VDI
 rm "$f"
 ```
 
-For each needed CoreOS instance perform following steps (adjust the environment variable 'new_vm' as needed):
+For each needed CoreOS instance perform following steps:
 ```
-f=`ls -r "$HOME/VirtualBox VMs/CoreOS Template"/coreos_production_*.vdi | head -n 1`
-new_vm="CoreOS-Dev"
-new_vm_f=`echo $f | sed -E "s#/CoreOS Template/#/$new_vm/#"`
-mkdir "`dirname "$new_vm_f"`"
-VBoxManage clonehd "$f" "$new_vm_f"
-# Resize virtual disk to 10 GB
-VBoxManage modifyhd "$new_vm_f" --resize 10240
+curl -o create_vm.sh https://github.com/Cube-Earth/docker-images/build-create-coreos/create_vm.sh
+chmod +x create_vm.sh
+./create_vm CoreOS-Dev 2048 10240
 ```
-After these steps, you have cloned a new virtual hard disk which can be used in a new virtual machines. This virtual machine have to be created inside the VirtualBox's user interace. Inside the wizard, select the newly cloned hard disk.
+Where 'CoreOS-Dev' is the name of your new VM with 2048 MB RAM and 10240 MB HDD size.
 
 # References
 - https://coreos.com/os/docs/latest/booting-on-virtualbox.html
