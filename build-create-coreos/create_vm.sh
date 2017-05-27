@@ -24,6 +24,7 @@ tpl_vdi=`ls -r "$vm_dir/CoreOS Template"/coreos_production_*.vdi | head -n 1`
 
 new_vm="$1"
 ram=${2-1024}
+hdd_size=${3-10240}
 device=`determine_network_device`
 [[ $? -ne 0 ]] && echo "ERROR: default network device could not be determined!" && exit 1
 
@@ -31,6 +32,7 @@ VBoxManage createvm --name "$new_vm" --ostype "Linux26_64" --register || exit 1
 
 new_vdi="$vm_dir/$new_vm/$new_vm-`basename "$tpl_vdi"`"
 VBoxManage clonehd "$tpl_vdi" "$new_vdi" || exit 1
+VBoxManage modifyhd "$new_vdi" --resize "$hdd_size"
 VBoxManage storagectl "$new_vm" --name "SATA Controller" --add sata --portcount 2 --controller IntelAHCI || exit 1
 VBoxManage storageattach "$new_vm" --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium "$new_vdi" || exit 1
 

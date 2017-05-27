@@ -7,8 +7,8 @@ then
 		echo "ERROR: downloading create-coreos-vdi failed."
 		exit 1
 	fi
-	sed -re 's/^(bzcat .*)( --stdout )(.*)$/\1 \3/' create-coreos-vdi | tee create-coreos-vdi > /dev/null
-	chmod +x create-coreos-vdi
+	sed -re 's/^(bzcat .*)( --stdout )(.*)$/\1 \3/' create-coreos-vdi > create-coreos-vdi-mod
+	chmod +x create-coreos-vdi-mod
 fi
 
-./create-coreos-vdi -V stable -d /VMs/CoreOS
+./create-coreos-vdi-mod -V stable -d /VMs/CoreOS
