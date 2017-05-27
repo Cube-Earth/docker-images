@@ -31,6 +31,7 @@ VBoxManage clonehd "$f" "$new_vm_f"
 # Resize virtual disk to 10 GB
 VBoxManage modifyhd "$new_vm_f" --resize 10240
 ```
+After these steps, you have cloned a new virtual hard disk which can be used in a new virtual machines. This virtual machine have to be created inside the VirtualBox's user interace. Inside the wizard, select the newly cloned hard disk.
 
 # Referencs
 - https://coreos.com/os/docs/latest/booting-on-virtualbox.html
