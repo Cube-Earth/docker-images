@@ -32,5 +32,5 @@ VBoxManage clonehd "$f" "$new_vm_f"
 VBoxManage modifyhd "$new_vm_f" --resize 10240
 ```
 
-# Reference:
+# Referencs
 - https://coreos.com/os/docs/latest/booting-on-virtualbox.html
