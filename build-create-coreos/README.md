@@ -13,7 +13,7 @@ Perform following commands to create the base VM template:
 mkdir build-create-coreos && cd build-create-coreos
 curl -o docker-compose.yml https://github.com/Cube-Earth/docker-images/build-create-coreos/docker-compose.yml
 docker-compose pull
-docker-compose run build-create-coreos
+docker-compose run --rm build-create-coreos
 
 f=`ls -r "$HOME/VirtualBox VMs/CoreOS Template"/coreos_production_*.bin | head -n 1`
 VBoxManage convertdd "$f" "${f%%.bin}.vdi" --format VDI
