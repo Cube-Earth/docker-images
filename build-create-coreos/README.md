@@ -15,16 +15,21 @@ curl -o docker-compose.yml https://github.com/Cube-Earth/docker-images/build-cre
 docker-compose pull
 docker-compose run build-create-coreos
 
-VBoxManage convertdd "$HOME/Library/VirtualBox/HardDisks/coreos_production_image.bin" "$HOME/Library/VirtualBox/HardDisks/coreos_production~~_1353.7.0~~.vdi" --format VDI
+f=`ls -r "$HOME/VirtualBox VMs/CoreOS Template"/coreos_production_*.bin | head -n 1`
+VBoxManage convertdd "$f" "${f%%.bin}.vdi" --format VDI
 
-rm "$HOME/VirtualBox VMs/CoreOS Template/coreos_production_image.bin"
+rm "$f"
 ```
 
-For needed CoreOS instance perform following steps:
+For each needed CoreOS instance perform following steps (adjust the environment variable 'new_vm' as needed):
 ```
-VBoxManage clonehd "$HOME/VirtualBox VMs/CoreOS Template/coreos_production_1353.7.0.vdi" "$HOME/VirtualBox VMs/coreos_dev.vdi"
+f=`ls -r "$HOME/VirtualBox VMs/CoreOS Template"/coreos_production_*.vdi | head -n 1`
+new_vm="CoreOS-Dev"
+new_vm_f=`echo $f | sed -E "s#/CoreOS Template/#/$new_vm/#"`
+mkdir "`dirname "$new_vm_f"`"
+VBoxManage clonehd "$f" "$new_vm_f"
 # Resize virtual disk to 10 GB
-VBoxManage modifyhd "$HOME/VirtualBox VMs/coreos_dev.vdi" --resize 10240
+VBoxManage modifyhd "$new_vm_f" --resize 10240
 ```
 
 # Reference:
